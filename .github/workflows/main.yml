@@ -47,6 +47,7 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           port: ${{secrets.SSH_PORT}}
           script: |
-            mkdir code
-            cd code/ && git clone https://github.com/vaibhavkaushik-10/github-actions-demo.git
-            cd code/github-actions-demo/ && docker-compose up -d
+            cd code/ && sudo rm -rf *
+            wget https://github.com/vaibhavkaushik-10/github-actions-demo/archive/refs/heads/master.zip
+            unzip master.zip
+            cd github-actions-demo-master/ && docker-compose up -d
