@@ -16,6 +16,7 @@ jobs:
       - run: npm test
   
   pushing-the-image-to-docker-hub:
+    needs: initializing-and-testing-code
     runs-on: ubuntu-latest
     steps:
       - name: checking-out-repo
@@ -35,6 +36,7 @@ jobs:
           tags: vaibhavkaushikalpha09/expressnodeapp
           
   deploying-the-code-to-the-ec2-instance:
+    needs: [initializing-and-testing-code, pushing-the-image-to-docker-hub]
     runs-on: ubuntu-latest
     steps:
       - name: fetching updates on the ec2 instance
