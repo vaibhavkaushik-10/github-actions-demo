@@ -44,4 +44,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           key: ${{secrets.SSH_KEY}}
           port: ${{secrets.SSH_PORT}}
-          script: sudo apt-get update -y
+          script: |
+            mkdir code
+            cd code/ && git clone https://github.com/vaibhavkaushik-10/github-actions-demo.git
+            cd code/github-actions-demo/ && docker-compose up -d
