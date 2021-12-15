@@ -1,0 +1,7 @@
+version: "3.5"
+services:
+  nodeapp:
+    build: .
+    ports:
+    - "3000:3000"
+    container_name: nodeapp
