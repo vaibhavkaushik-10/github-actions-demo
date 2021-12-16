@@ -50,6 +50,7 @@ jobs:
           port: ${{secrets.SSH_PORT}}
           source: "docker-compose.yml"
           target: "code"
+          
   bringing-up-docker-compose:
     needs: copying-compose-on-ec2
     runs-on: ubuntu-latest
@@ -61,4 +62,6 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           key: ${{secrets.SSH_KEY}}
           port: ${{secrets.SSH_PORT}}
-          script: cd code/ && docker-compose up -d
+          script: |
+            docker rm nodeapp
+            cd code/ && docker-compose up -d
