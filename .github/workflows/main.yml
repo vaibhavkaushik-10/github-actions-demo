@@ -35,19 +35,30 @@ jobs:
           push: true
           tags: vaibhavkaushikalpha09/expressnodeapp
           
-  deploying-the-code-to-the-ec2-instance:
+  copying-compose-on-ec2:
     needs: [initializing-and-testing-code, pushing-the-image-to-docker-hub]
     runs-on: ubuntu-latest
     steps:
-      - name: fetching updates on the ec2 instance
+      - name: checking out the repo
+        uses: actions/checkout@master
+      - name: coying docker-compose to the ec2 instance
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USERNAME}}
+          key: ${{secrets.SSH_KEY}}
+          port: ${{secrets.SSH_PORT}}
+          source: "docker-compose.yml"
+          target: "code"
+  bringing-up-docker-compose:
+    needs: copying-compose-on-ec2
+    runs-on: ubuntu-latest
+    steps:
+      - name: running the shell command for docker-compose up
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.SSH_HOST}}
           username: ${{secrets.SSH_USERNAME}}
           key: ${{secrets.SSH_KEY}}
           port: ${{secrets.SSH_PORT}}
-          script: |
-            cd code/ && sudo rm -rf *
-            wget https://github.com/vaibhavkaushik-10/github-actions-demo/archive/refs/heads/master.zip
-            unzip master.zip
-            cd github-actions-demo-master/ && docker-compose up -d
+          script: cd code/ && docker-compose up -d
