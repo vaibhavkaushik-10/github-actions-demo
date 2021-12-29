@@ -4,15 +4,6 @@ jobs:
   initializing-and-testing-code:
     runs-on: ubuntu-latest
     steps:
-      - name: conditional command
-        run: |
-          echo "Either enter Y or N: "
-          read OPTION
-          if [[$OPTION -eq "Y"]]; then
-            echo "Option is Y"
-          else
-            echo "Option is "N"
-          fi
       - name: checking-out-repo
         uses: actions/checkout@v2
       
