@@ -1,5 +1,20 @@
 name: actions file for nodejs code
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Who to greet
+        options: 
+        - monalisa
+        - cschleiden
+      message:
+        required: true
+      use-emoji:
+        type: boolean
+        description: Include 🎉🤣 emojis
+      environment:
+        type: environment
 jobs:
   initializing-and-testing-code:
     runs-on: ubuntu-latest
